@@ -1,4 +1,4 @@
-import { createBrowserRouter, type RouteObject } from 'react-router-dom'
+import { createBrowserRouter, Navigate, type RouteObject } from 'react-router-dom'
 
 import Layout from 'client:views/layout'
 import ErrorView from 'client:views/error'
@@ -14,6 +14,10 @@ export const routes: RouteObject[] = [
     path: '/',
     Component: Layout,
     children: [
+      {
+        index: true,
+        element: <Navigate to={ROUTES.Login} />,
+      },
       {
         path: getSlug(ROUTES.Login),
         Component: LoginView,
