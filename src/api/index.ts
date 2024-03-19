@@ -1,2 +1,2 @@
 export { default } from './api'
-export type { LoginRequestData, ResetPasswordRequestData } from './types'
+export type { LoginRequestData, ResetPasswordRequestData, SetNewPasswordRequestData } from './types'
