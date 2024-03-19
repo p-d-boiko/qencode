@@ -5,13 +5,14 @@ import ErrorView from 'client:views/error'
 import LoginView from 'client:views/login'
 import ResetPasswordView from 'client:views/reset-password'
 import SetNewPasswordView from 'client:views/set-new-password'
+import ComingSoon from 'client:views/coming-soon'
 
 import { ROUTES, MISSING_RESOURCE_MESSAGE } from './constants'
 import { getSlug } from './utils'
 
 export const routes: RouteObject[] = [
   {
-    path: '/',
+    path: ROUTES.Home,
     Component: Layout,
     children: [
       {
@@ -28,7 +29,7 @@ export const routes: RouteObject[] = [
       },
       {
         path: getSlug(ROUTES.SignUp),
-        element: <p>Sign Up</p>,
+        Component: ComingSoon,
       },
       {
         path: getSlug(ROUTES.SetNewPassoword, { positionInUri: 0 }),
