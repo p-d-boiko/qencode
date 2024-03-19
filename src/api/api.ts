@@ -5,6 +5,8 @@ import {
   RequestConfig,
   FetchResult,
   FetchError,
+  ResetPasswordRequestData,
+  ResetPasswordResponseError,
 } from './types'
 
 const API_HOST = import.meta.env['VITE_API_HOST']
@@ -55,6 +57,14 @@ class API {
   login(body: LoginRequestData) {
     return this.#request<LoginRequestData, LoginResponseData, LoginResponseError>({
       uri: 'auth/login',
+      method: 'POST',
+      body,
+    })
+  }
+
+  resetPassword(body: ResetPasswordRequestData) {
+    return this.#request<ResetPasswordRequestData, ResetPasswordResponseError>({
+      uri: 'auth/password-reset',
       method: 'POST',
       body,
     })

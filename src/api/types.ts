@@ -35,19 +35,31 @@ type FieldsValidationError<T> = {
   error: string
 }
 
+type CommonApiError = {
+  loc: string[]
+  msg: string
+  type: string
+}[]
+
 type LoginResponseError = {
   detail:
-    | [
-        {
-          loc: string[]
-          msg: string
-          type: string
-        },
-      ]
+    | CommonApiError
     // comes from API on form validation error
     | FieldsValidationError<LoginRequestData>[]
     // comes from API on auth error
     | string
+}
+
+type ResetPasswordRequestData = {
+  email: string
+  redirect_url?: string
+}
+
+type ResetPasswordResponseError = {
+  detail:
+    | CommonApiError
+    // comes from API on form validation error
+    | FieldsValidationError<ResetPasswordRequestData>[]
 }
 
 export type {
@@ -58,4 +70,6 @@ export type {
   FetchResult,
   FetchError,
   FieldsValidationError,
+  ResetPasswordRequestData,
+  ResetPasswordResponseError,
 }
