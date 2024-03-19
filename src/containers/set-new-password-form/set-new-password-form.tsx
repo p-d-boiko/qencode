@@ -1,8 +1,20 @@
-import type { FC } from 'react'
+import { type FC, useState } from 'react'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { Stack, Input, Button, useToast, FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/react'
+import {
+  Stack,
+  Input,
+  Button,
+  useToast,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  InputGroup,
+  InputRightElement,
+  IconButton,
+} from '@chakra-ui/react'
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
 import api, { type SetNewPasswordRequestData } from 'client:api'
 import { ROUTES } from 'client:router'
@@ -14,8 +26,9 @@ const SetNewPasswordForm: FC<SetNewPasswordFormProps> = ({ token, secret }) => {
     mode: 'onChange',
     reValidateMode: 'onChange',
   })
-
   const navigate = useNavigate()
+  const [passwordVisible, setPasswordVisible] = useState(false)
+  const togglePasswordVisibility = () => setPasswordVisible((prevState) => !prevState)
 
   const toast = useToast({
     title: 'An error occured',
@@ -78,36 +91,58 @@ const SetNewPasswordForm: FC<SetNewPasswordFormProps> = ({ token, secret }) => {
     <Stack as="form" gap="25px" onSubmit={handleSubmit(handleSetNewPassword)}>
       <FormControl isInvalid={!!passwordFieldState.error}>
         <FormLabel htmlFor="password">Password</FormLabel>
-        <Input
-          type="password"
-          placeholder="Password"
-          variant="outline"
-          isInvalid={passwordFieldState.invalid}
-          {...register('password', {
-            required: true,
-            minLength: {
-              value: 8,
-              message: 'Please use at least 8 characters',
-            },
-          })}
-        />
+        <InputGroup>
+          <Input
+            type={passwordVisible ? 'text' : 'password'}
+            placeholder="Password"
+            variant="outline"
+            isInvalid={passwordFieldState.invalid}
+            {...register('password', {
+              required: true,
+              minLength: {
+                value: 8,
+                message: 'Please use at least 8 characters',
+              },
+            })}
+          />
+          <InputRightElement width="4.5rem" mr={-2}>
+            <IconButton
+              variant="hidden"
+              aria-label="button"
+              onClick={togglePasswordVisibility}
+              color="gray.500"
+              icon={passwordVisible ? <ViewOffIcon boxSize={5} /> : <ViewIcon boxSize={5} />}
+            />
+          </InputRightElement>
+        </InputGroup>
         <FormErrorMessage>{passwordFieldState.error?.message}</FormErrorMessage>
       </FormControl>
       <FormControl isInvalid={!!passwordConfirmFieldState.error}>
         <FormLabel fontWeight="medium" htmlFor="password_confirm">
           Confirm Password
         </FormLabel>
-        <Input
-          type="password"
-          placeholder="Password"
-          variant="outline"
-          isInvalid={passwordConfirmFieldState.invalid}
-          {...register('password_confirm', {
-            required: true,
-            validate: (repeatPassword, { password }) => repeatPassword === password || 'Passwords mismatch',
-            deps: ['password'],
-          })}
-        />
+        <InputGroup>
+          <Input
+            type={passwordVisible ? 'text' : 'password'}
+            placeholder="Password"
+            variant="outline"
+            isInvalid={passwordConfirmFieldState.invalid}
+            {...register('password_confirm', {
+              required: true,
+              validate: (repeatPassword, { password }) => repeatPassword === password || 'Passwords mismatch',
+              deps: ['password'],
+            })}
+          />
+          <InputRightElement width="4.5rem" mr={-2}>
+            <IconButton
+              variant="hidden"
+              aria-label="button"
+              onClick={togglePasswordVisibility}
+              color="gray.500"
+              icon={passwordVisible ? <ViewOffIcon boxSize={5} /> : <ViewIcon boxSize={5} />}
+            />
+          </InputRightElement>
+        </InputGroup>
         <FormErrorMessage>{passwordConfirmFieldState.error?.message}</FormErrorMessage>
       </FormControl>
       <Button type="submit" variant="solid" isLoading={formState.isSubmitting}>

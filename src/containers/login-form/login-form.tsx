@@ -1,5 +1,17 @@
-import type { FC } from 'react'
-import { Stack, Input, Button, Text, useToast, FormControl, FormErrorMessage } from '@chakra-ui/react'
+import { type FC, useState } from 'react'
+import {
+  Stack,
+  Input,
+  Button,
+  Text,
+  useToast,
+  FormControl,
+  FormErrorMessage,
+  InputGroup,
+  InputRightElement,
+  IconButton,
+} from '@chakra-ui/react'
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import { useForm } from 'react-hook-form'
 
 import api, { type LoginRequestData } from 'client:api'
@@ -13,6 +25,8 @@ const LoginForm: FC = () => {
     mode: 'onChange',
     reValidateMode: 'onChange',
   })
+  const [passwordVisible, setPasswordVisible] = useState(false)
+  const togglePasswordVisibility = () => setPasswordVisible((prevState) => !prevState)
 
   const toast = useToast({
     title: 'An error occured',
@@ -80,18 +94,29 @@ const LoginForm: FC = () => {
           <FormErrorMessage>{emailFieldState.error?.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={!!passwordFieldState.error}>
-          <Input
-            type="password"
-            placeholder="Password"
-            variant="outline"
-            {...register('password', {
-              required: true,
-              minLength: {
-                value: 5,
-                message: 'Please use at least 5 characters',
-              },
-            })}
-          />
+          <InputGroup>
+            <Input
+              type={passwordVisible ? 'text' : 'password'}
+              placeholder="Password"
+              variant="outline"
+              {...register('password', {
+                required: true,
+                minLength: {
+                  value: 5,
+                  message: 'Please use at least 5 characters',
+                },
+              })}
+            />
+            <InputRightElement width="4.5rem" mr={-2}>
+              <IconButton
+                variant="hidden"
+                aria-label="button"
+                onClick={togglePasswordVisibility}
+                color="gray.500"
+                icon={passwordVisible ? <ViewOffIcon boxSize={5} /> : <ViewIcon boxSize={5} />}
+              />
+            </InputRightElement>
+          </InputGroup>
           <FormErrorMessage>{passwordFieldState.error?.message}</FormErrorMessage>
         </FormControl>
         <Link to={ROUTES.ResetPassoword} sx={{ marginLeft: 'auto', mt: '15px' }}>
