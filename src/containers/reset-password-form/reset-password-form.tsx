@@ -25,7 +25,7 @@ const ResetPasswordForm: FC = () => {
     isClosable: true,
   })
 
-  const handleLogin = async (resetData: ResetPasswordRequestData) => {
+  const handleResettingPassword = async (resetData: ResetPasswordRequestData) => {
     const { data, error } = await api.resetPassword({
       ...resetData,
       redirect_url: import.meta.env['VITE_RESET_PASSWORD_REDIRECT_URI'],
@@ -67,7 +67,7 @@ const ResetPasswordForm: FC = () => {
   const emailFieldState = getFieldState('email', formState)
 
   return (
-    <Stack as="form" gap="25px" onSubmit={handleSubmit(handleLogin)}>
+    <Stack as="form" gap="25px" onSubmit={handleSubmit(handleResettingPassword)}>
       <FormControl isInvalid={!!emailFieldState.error}>
         <Input
           type="email"
