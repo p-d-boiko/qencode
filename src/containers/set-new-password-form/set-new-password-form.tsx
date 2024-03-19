@@ -47,7 +47,6 @@ const SetNewPasswordForm: FC<SetNewPasswordFormProps> = ({ token, secret }) => {
             })
           }
           if ('field_name' in pieceOfError && 'error' in pieceOfError) {
-            console.log(pieceOfError)
             setError(pieceOfError.field_name, { message: pieceOfError.error })
             toast({
               description: `Invalid ${pieceOfError.field_name} field: ${pieceOfError.error}`,
