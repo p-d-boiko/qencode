@@ -4,6 +4,7 @@ enum ROUTES {
   Login = '/login',
   SignUp = '/sign-up',
   ResetPassoword = '/reset-password',
+  SetNewPassoword = '/set-new-password/:token',
 }
 
 export { MISSING_RESOURCE_MESSAGE, ROUTES }

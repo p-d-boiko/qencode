@@ -62,6 +62,20 @@ type ResetPasswordResponseError = {
     | FieldsValidationError<ResetPasswordRequestData>[]
 }
 
+type SetNewPasswordRequestData = {
+  token: string
+  secret: string
+  password: string
+  password_confirm: string
+}
+
+type SetNewPasswordResponseError = {
+  detail:
+    | CommonApiError
+    // comes from API on form validation error
+    | FieldsValidationError<Pick<SetNewPasswordRequestData, 'password' | 'password_confirm'>>[]
+}
+
 export type {
   LoginRequestData,
   LoginResponseData,
@@ -72,4 +86,6 @@ export type {
   FieldsValidationError,
   ResetPasswordRequestData,
   ResetPasswordResponseError,
+  SetNewPasswordRequestData,
+  SetNewPasswordResponseError,
 }
