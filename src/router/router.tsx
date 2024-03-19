@@ -1,8 +1,9 @@
 import { createBrowserRouter, type RouteObject } from 'react-router-dom'
 
 import Layout from 'client:views/layout'
-import LoginView from 'client:views/login'
 import ErrorView from 'client:views/error'
+import LoginView from 'client:views/login'
+import ResetPasswordView from 'client:views/reset-password'
 
 import { ROUTES, MISSING_RESOURCE_MESSAGE } from './constants'
 import { getSlug } from './utils'
@@ -18,8 +19,9 @@ export const routes: RouteObject[] = [
       },
       {
         path: getSlug(ROUTES.ResetPassoword),
-        element: <p>Reset Password</p>,
-      },{
+        Component: ResetPasswordView,
+      },
+      {
         path: getSlug(ROUTES.SignUp),
         element: <p>Sign Up</p>,
       },
