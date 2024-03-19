@@ -14,4 +14,7 @@ export default defineConfig({
     port: parseInt(process.env['PORT'], 10),
   },
   publicDir: '../public',
+  build: {
+    outDir: '../dist',
+  },
 })

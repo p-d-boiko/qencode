@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "dotenv -e .env.development -- vite",
-    "build:production": "vite build",
+    "build:production": "dotenv -e .env.production -- vite build",
     "serve:locally": "vite preview",
     "typecheck": "tsc --pretty --noEmit",
     "typecheck:staged": "tsc-files --pretty --noEmit --",
